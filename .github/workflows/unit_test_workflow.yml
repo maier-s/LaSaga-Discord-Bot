@@ -32,4 +32,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run Unittest
-        run: python tests/unit_test/Demo_UT.py
+        run: ls tests
