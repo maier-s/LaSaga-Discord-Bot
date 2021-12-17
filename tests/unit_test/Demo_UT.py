@@ -1,8 +1,3 @@
-import sys
-# Change the Path for this repository to make the python imports work
-# The Path defines the search directories for liberies
-sys.path.append("/mnt/d/Stefa/Documents/Github/LaSaga-Discord-Bot")
-
 from samples.Demo import Demo_Component
 import unittest
 
