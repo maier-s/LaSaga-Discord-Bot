@@ -15,7 +15,7 @@ class Demo_UT(unittest.TestCase):
         origin_secondFunction = Demo_Component.firstFunction
         try:
             Demo_Component.firstFunction = stub_firstFunction
-            self.assertEqual(Demo_Component().secondFunction(5),15)
+            self.assertEqual(Demo_Component().secondFunction(5),10)
         finally:
             Demo_Component.firstFunction = origin_secondFunction
     
