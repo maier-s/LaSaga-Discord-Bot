@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.getcwd())
 from samples.Demo import Demo_Component
 import unittest
 
