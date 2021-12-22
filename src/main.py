@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 TOKEN = None # Acess Token for Discord API
 GUILD = None # Guild name for securing that the correct Server is managed
 
+#This is a test commit
+
 def setup():
     global TOKEN
     global GUILD
