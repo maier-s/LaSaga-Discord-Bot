@@ -1,13 +1,16 @@
 import discord
+from discord.ext import commands
 
-class LaSaga_Bot(discord.Client):
-    def __init__(self, *, loop=None, **options):
-        #Referces to https://stackoverflow.com/questions/64148371/discord-bot-can-only-see-itself-and-no-other-users-in-guild
+from Com_Bot import test
+
+class LaSaga_Bot(commands.Bot):
+    def __init__(self):
         intend = discord.Intents.default()
         intend.members = True
 
-        # Initialize Base Class
-        super().__init__(loop=loop,intents = intend ,**options)
+        super().__init__(command_prefix = "$",intents =intend)
+        super().add_command(test)
+    
     async def on_ready(self):
         # assume that the first registert server is the originally la saga server!
         members = '\n - '.join([member.name for member in self.guilds[0].members])
@@ -15,3 +18,5 @@ class LaSaga_Bot(discord.Client):
             f'{self.user} is connected to the following guild:\n'
             f'{self.guilds[0].name}(id: {self.guilds[0].id})\n'
             f'Guild Members:\n - {members}')
+
+
