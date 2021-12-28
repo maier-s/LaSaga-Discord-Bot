@@ -25,7 +25,6 @@ class LaSaga_Bot(commands.Bot):
         for object in getmembers(Com_Bot):
             if type(object[1]) == discord.ext.commands.core.Command:
                 com_functions.append(eval(object[0]))
-        #com_functions.append([eval(object[0]) for object in getmembers(Com_Bot) if type(object[1]) == discord.ext.commands.core.Command])
         for com in com_functions:
             super().add_command(com)
 
