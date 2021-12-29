@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import Com_Bot
-from inspect import getmembers, isfunction
+from inspect import getmembers
 from Com_Bot import *
 
 class LaSaga_Bot(commands.Bot):
