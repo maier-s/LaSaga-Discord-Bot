@@ -34,3 +34,4 @@ jobs:
         run: |
           echo Running Unit Tests ...,
           python tests/unit_test/Demo_UT.py
+          python tests/unit_test/LaSaga_Bot_UT.py
