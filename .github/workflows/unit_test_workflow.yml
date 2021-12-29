@@ -30,6 +30,11 @@ jobs:
         with:
           python-version: 3.8
       # Runs a set of commands using the runners shell
+       # Runs a set of commands using the runners shell
+      - name: Install Discord API
+        run: |
+          echo Installing Discord API,
+          pip install discord.py
       - name: Run Unit Tests
         run: |
           echo Running Unit Tests ...,
