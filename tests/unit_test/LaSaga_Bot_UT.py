@@ -33,6 +33,9 @@ class La_Saga_UT(unittest.TestCase):
                 com_functions.append(object[0])
         for function in com_functions:
             self.assertIsNotNone(self.uut.get_command(function))
+    def test_on_ready(self):
+        #Define Unit test for on ready
+        pass
         
 if __name__ == "__main__":
     unittest.main()

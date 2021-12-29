@@ -36,5 +36,6 @@ class LaSaga_Bot(commands.Bot):
             f'{self.user} is connected to the following guild:\n'
             f'{self.guilds[0].name}(id: {self.guilds[0].id})\n'
             f'Guild Members:\n - {members}')
+        return members
 
 
