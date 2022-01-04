@@ -34,7 +34,11 @@ class La_Saga_UT(unittest.TestCase):
         for function in com_functions:
             self.assertIsNotNone(self.uut.get_command(function))
     def test_on_ready(self):
-        #Define Unit test for on ready
+        # Define Unit test for on ready
+        # Unit Test can not be defined due to guild variable can only be read by activating the bot
+        # Activating the bot causing a blocking function that only returns if the bot finishes.
+        # No checks can be done in paralell.
+        # TODO: Find solution for that problem --> Write the Bot as a mutlithreaded function and then check a log file.
         pass
         
 if __name__ == "__main__":
