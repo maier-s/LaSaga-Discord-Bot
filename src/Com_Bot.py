@@ -15,7 +15,7 @@ async def test(ctx,args):
 async def fu(ctx):
         await ctx.send("You too!")
 @commands.command(name="w2g")
-async def w2g(ctx, arg1, arg2,arg3 = None):
+async def w2g(ctx, arg1=None, arg2=None,arg3 = None):
         W2G_Handler = W2G(W2G_TOKEN)
         if arg1 == "create":
                 link,streamkey = W2G_Handler.makeRoom(arg2)
@@ -26,9 +26,6 @@ async def w2g(ctx, arg1, arg2,arg3 = None):
                         return
                 else:
                         await ctx.send(f'Somthing went wrong using the following information to update room \nStreamkey:{arg2}\nURL:{arg3}')
-        elif arg1 == "add":
-                if W2G_Handler.addtoPlaylist(arg2,arg3):
-                        await ctx.send(f'Add Video sucessfull to Room: {arg2}')
-                        return
-                else:
-                        await ctx.send(f'Somthing went wrong using the following information to add a video \nStreamkey:{arg2}\nURL:{arg3}')
+        else:
+                # Write some more instrutions
+                await ctx.send(f'command {arg1} not found!')

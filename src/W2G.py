@@ -32,17 +32,3 @@ class W2G:
             return True
         else:
             return False
-    def addtoPlaylist(self,streamkey:str,url:str)->bool:
-        if url == None or streamkey == None:
-            return False
-        req = {
-                       "w2g_api_key": self.W2G_TOKEN,
-                        "add_items": [{"url": url,"title": "Hello World"}]
-            }
-        print(req)
-        response = requests.post(url=f'https://w2g.tv/rooms/{streamkey}/playlists/current/playlist_items/sync_update',data=req)
-        print(response)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
