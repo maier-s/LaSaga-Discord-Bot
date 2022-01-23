@@ -35,6 +35,7 @@ jobs:
         run: |
           echo Installing Discord API,
           pip install discord.py
+          pip install requests
       - name: Run Unit Tests
         run: |
           echo Running Unit Tests ...,
