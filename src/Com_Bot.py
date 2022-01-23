@@ -1,10 +1,8 @@
 from discord.ext import commands
 from discord.ext.commands.core import command
 from W2G import W2G
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
 W2G_TOKEN = os.getenv('W2G_TOKEN')
 
 @commands.command(name="test")
