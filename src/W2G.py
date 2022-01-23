@@ -1,5 +1,4 @@
 import requests
-from dotenv import load_dotenv
 import os
 class W2G:
     W2G_TOKEN = None
