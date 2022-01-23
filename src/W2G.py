@@ -7,7 +7,6 @@ class W2G:
     def __init__(self,Token=None) -> None:
         if Token == None:
             print("No Token assigend")
-            self.__del__()
         else:
             self.W2G_TOKEN = Token
 
