@@ -1,6 +1,7 @@
 from discord.ext import commands
 from discord.ext.commands.core import command
 from W2G import W2G
+from LoL import LoL
 import os
 
 W2G_TOKEN = os.getenv('W2G_TOKEN')
@@ -27,3 +28,8 @@ async def w2g(ctx, arg1=None, arg2=None,arg3 = None):
         else:
                 # Write some more instrutions
                 await ctx.send(f'command {arg1} not found!')
+@commands.command(name="lol")
+async def lol(ctx,arg1=None):
+        LoL_Handler = LoL()
+        await ctx.send(f'{LoL_Handler.requests()}')
+        return
