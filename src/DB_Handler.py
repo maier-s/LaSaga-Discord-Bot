@@ -42,6 +42,30 @@ class DB_Handler:
             except:
                 print("ERROR: Cannot Create User Table")
             self.DB_Connection.commit()
+    def createLoLUser(self,DiscordUserID:str = None,LoLUserID:str = None):
+        try:
+            print("Start Checking if the User already has a registered UserName")
+            self.DB_Cursor.execute("""
+                SELECT EXISTS (
+                SELECT FROM Users
+                WHERE Discord_UserName = '%s'
+            );
+            """,(DiscordUserID))
+            print("Trying to execute")
+            print(f'UserID: {self.DB_Cursor.fetchall()}')
+        except:
+            print("ERROR: Cannot check if the User exists or not!")
+        try:
+            self.DB_Cursor.execute("""
+            INSERT INTO Users (Discord_UserName,LOL_UserName)
+            VALUES (%s,%s);
+            """,(DiscordUserID,LoLUserID))
+            
+        except:
+            print("ERROR: Can't create User")
+        self.DB_Connection.commit()
+
+
             
             
 
@@ -49,3 +73,4 @@ class DB_Handler:
 if __name__ == "__main__":
     DB = DB_Handler()
     DB.createDatabase()
+    DB.createLoLUser("DiscordUser", "LoLUser")
