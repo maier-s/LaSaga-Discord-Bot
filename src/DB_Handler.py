@@ -1,13 +1,15 @@
 # This is an DB Handler for Postgres SQL Database
 
 import psycopg2
+from dotenv import load_dotenv
+import os
 
 class DB_Handler:
     DB_Connection = None
     DB_Cursor = None
     def __init__(self):
         try:
-            self.DB_Connection = psycopg2.connect("dbname='Users' host='localhost'")
+            self.DB_Connection = psycopg2.connect(database='Users', host='localhost',user='postgres', password=os.getenv('DB_PASSWORD'))
             self.DB_Cursor = self.DB_Connection.cursor()
 
             print("Sucessfully connected to Database and created Cursor")
@@ -48,21 +50,24 @@ class DB_Handler:
             self.DB_Cursor.execute("""
                 SELECT EXISTS (
                 SELECT FROM Users
-                WHERE Discord_UserName = '%s'
+                WHERE Discord_UserName = %s
             );
-            """,(DiscordUserID))
-            print("Trying to execute")
-            print(f'UserID: {self.DB_Cursor.fetchall()}')
+            """,(DiscordUserID,))
+            User_exists = self.DB_Cursor.fetchall()[0][0]
+            if not User_exists:
+                try:
+                    self.DB_Cursor.execute("""
+                    INSERT INTO Users (Discord_UserName,LOL_UserName)
+                    VALUES (%s,%s);
+                    """, (DiscordUserID, LoLUserID))
+
+                except:
+                    print("ERROR: Can't create User")
+            else:
+                print(f'ERROR: User with Username {DiscordUserID} already exists in Database')
         except:
             print("ERROR: Cannot check if the User exists or not!")
-        try:
-            self.DB_Cursor.execute("""
-            INSERT INTO Users (Discord_UserName,LOL_UserName)
-            VALUES (%s,%s);
-            """,(DiscordUserID,LoLUserID))
-            
-        except:
-            print("ERROR: Can't create User")
+
         self.DB_Connection.commit()
 
 
@@ -71,6 +76,7 @@ class DB_Handler:
 
 
 if __name__ == "__main__":
+    load_dotenv()
     DB = DB_Handler()
     DB.createDatabase()
     DB.createLoLUser("DiscordUser", "LoLUser")
