@@ -45,30 +45,57 @@ class DB_Handler:
                 print("ERROR: Cannot Create User Table")
             self.DB_Connection.commit()
     def createLoLUser(self,DiscordUserID:str = None,LoLUserID:str = None):
-        try:
-            print("Start Checking if the User already has a registered UserName")
-            self.DB_Cursor.execute("""
-                SELECT EXISTS (
-                SELECT FROM Users
-                WHERE Discord_UserName = %s
-            );
-            """,(DiscordUserID,))
-            User_exists = self.DB_Cursor.fetchall()[0][0]
-            if not User_exists:
-                try:
-                    self.DB_Cursor.execute("""
-                    INSERT INTO Users (Discord_UserName,LOL_UserName)
-                    VALUES (%s,%s);
-                    """, (DiscordUserID, LoLUserID))
+        if not (self.DB_Connection == None  or self.DB_Cursor == None):
+            try:
+                self.DB_Cursor.execute("""
+                    SELECT EXISTS (
+                    SELECT FROM Users
+                    WHERE Discord_UserName = %s
+                );
+                """,(DiscordUserID,))
+                User_exists = self.DB_Cursor.fetchall()[0][0]
+                if not User_exists:
+                    try:
+                        self.DB_Cursor.execute("""
+                        INSERT INTO Users (Discord_UserName,LOL_UserName)
+                        VALUES (%s,%s);
+                        """, (DiscordUserID, LoLUserID))
 
-                except:
-                    print("ERROR: Can't create User")
-            else:
-                print(f'ERROR: User with Username {DiscordUserID} already exists in Database')
-        except:
-            print("ERROR: Cannot check if the User exists or not!")
+                    except:
+                        print("ERROR: Can't create User")
+                else:
+                    print(f'ERROR: User with Username {DiscordUserID} already exists in Database')
+            except:
+                print("ERROR: Cannot check if the User exists or not!")
 
-        self.DB_Connection.commit()
+            self.DB_Connection.commit()
+        else:
+            print("ERROR: Cannto execute SQL Functions because no DB Connection or Curser exists.")
+    def removeUser(self,DiscordUserID, LoLUserID):
+        if not (self.DB_Connection == None  or self.DB_Cursor == None):
+            try:
+                self.DB_Cursor.execute("""
+                    SELECT EXISTS (
+                    SELECT FROM Users
+                    WHERE LOL_UserName = %s AND Discord_UserName =%s
+                );
+                """,(LoLUserID,DiscordUserID))
+                User_exists = self.DB_Cursor.fetchall()[0][0]
+                if User_exists:
+                    try:
+                        self.DB_Cursor.execute("""
+                        DELETE FROM Users
+                        WHERE Discord_UserName = %s AND LOL_UserName = %s;
+                        """, (DiscordUserID, LoLUserID))
+                        self.DB_Connection.commit()
+                    except:
+                        print("ERROR: Can not delete User from Table")
+                else:
+                    print(f'ERROR: User with Username {LoLUserID} dont exists in Database')
+            except:
+                print("ERROR: Cannote check if the User exists")
+        else:
+            print("ERROR: Cannto execute SQL Functions because no DB Connection or Curser exists.")
 
 
             
@@ -80,3 +107,5 @@ if __name__ == "__main__":
     DB = DB_Handler()
     DB.createDatabase()
     DB.createLoLUser("DiscordUser", "LoLUser")
+    DB.createLoLUser("Test1", "Test2")
+    DB.removeUser("Test1", "Test2")
