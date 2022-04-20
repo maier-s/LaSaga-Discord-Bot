@@ -71,7 +71,7 @@ class DB_Handler:
             self.DB_Connection.commit()
         else:
             print("ERROR: Cannto execute SQL Functions because no DB Connection or Curser exists.")
-    def removeUser(self,DiscordUserID, LoLUserID):
+    def removeUser(self,DiscordUserID:str, LoLUserID:str):
         if not (self.DB_Connection == None  or self.DB_Cursor == None):
             try:
                 self.DB_Cursor.execute("""
@@ -96,6 +96,21 @@ class DB_Handler:
                 print("ERROR: Cannote check if the User exists")
         else:
             print("ERROR: Cannto execute SQL Functions because no DB Connection or Curser exists.")
+    def getLoLUser(self, DiscordUser:str = None)->str:
+        LoL_UserID = None
+        if not DiscordUser == None:
+            try:
+                self.DB_Cursor.execute("""
+                                    SELECT LOL_UserName
+                                    FROM Users
+                                    WHERE Discord_UserName =%s;
+                                """, (DiscordUser,))
+                LoL_UserID = self.DB_Cursor.fetchall()[0][0]
+            except:
+                print(f'ERROR: No LoL User found for Discord User: {DiscordUser}')
+        else:
+            print("ERROR: No Discord User ID recieved")
+        return LoL_UserID
 
 
             
@@ -109,3 +124,4 @@ if __name__ == "__main__":
     DB.createLoLUser("DiscordUser", "LoLUser")
     DB.createLoLUser("Test1", "Test2")
     DB.removeUser("Test1", "Test2")
+    print(DB.getLoLUser("DiscordUser"))
